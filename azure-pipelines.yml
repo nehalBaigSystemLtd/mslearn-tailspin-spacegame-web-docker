@@ -20,6 +20,17 @@ stages:
         command: 'restore'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
         feedsToUse: 'select'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
+        arguments: '-c Release -o /app/build'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-c Release -o /app/publish'
+        
   - job: Docker
     displayName: Build And Push Docker job 
     steps:
