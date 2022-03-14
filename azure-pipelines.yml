@@ -26,25 +26,3 @@ stages:
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
   
-  - job: Helm
-    displayName: Helm Job
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: HelmInstaller@0
-      displayName: Install Helm
-      inputs:
-        helmVersion: '2.14.1'
-        installKubectl: true
-    - task: HelmDeploy@0
-      displayName: Intialize Helm
-      inputs:
-        azureContainerRegistry: $(containerRegistry)
-        azureResourceGroupForACR: $(ResourceGroup)
-        azureSubscriptionForACR: 'Visual Studio Enterprise Subscription – MPN(d1b305c5-2c51-4f0a-a6b8-04e9fe0d8c17)' 
-        connectionType: 'Azure Resource Manager'
-        azureSubscription: 'Visual Studio Enterprise Subscription – MPN(d1b305c5-2c51-4f0a-a6b8-04e9fe0d8c17)'
-        azureResourceGroup: $(ResourceGroup)
-        kubernetesCluster: 'K8s_Cluster'
-        useClusterAdmin: true
-        command: 'init'
