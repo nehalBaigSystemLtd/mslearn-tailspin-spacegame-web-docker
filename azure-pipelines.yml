@@ -6,15 +6,14 @@ variables:
   containerRegistry: 'azpipecr'
   repository: 'azcr'
   ResourceGroup: 'azpipe'
-
+pool:
+     vmImage: 'windows-latest'
 stages:
 - stage: Build
   displayName: Build and push stage
   jobs:
   - job: DotNet 
-    displayName: DotNet Build and Test
-    pool:
-     vmImage: 'windows-latest'
+    displayName: DotNet Build and Test   
     steps:
     - task: DotNetCoreCLI@2
       inputs:
@@ -23,8 +22,6 @@ stages:
         feedsToUse: 'select'
   - job: Docker
     displayName: Build And Push Docker job 
-    pool:
-      vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
