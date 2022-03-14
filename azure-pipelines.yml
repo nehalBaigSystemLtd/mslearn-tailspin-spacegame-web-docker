@@ -24,7 +24,8 @@ stages:
       inputs:
         command: 'build'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
-        arguments: '-c Release -o /app/build'
+        arguments: '-c Release -o $(Build.SourcesDirectory)/app/build'
+        zipAfterPublish: true
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
@@ -33,8 +34,9 @@ stages:
       inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-c Release -o /app/publish'
+        arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
         zipAfterPublish: true
+    
   - job: Docker
     displayName: Build And Push Docker job 
     steps:
