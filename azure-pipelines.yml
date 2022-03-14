@@ -12,7 +12,7 @@ variables:
 
 stages:
 - stage: Build and Push
-  displayName: Build and Push image
+  displayName: Build
   jobs:
   - job: BuildPush
     displayName: Build and Push Images 
