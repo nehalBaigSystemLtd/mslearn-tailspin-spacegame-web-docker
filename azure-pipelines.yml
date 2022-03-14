@@ -10,8 +10,17 @@ variables:
 stages:
 - stage: Build
   displayName: Build and push stage
-  
   jobs:
+  - job: DotNet 
+    displayName: DotNet Build and Test
+    pool:
+     vmImage: 'windows-latest'
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
+        feedsToUse: 'select'
   - job: Docker
     displayName: Build And Push Docker job 
     pool:
