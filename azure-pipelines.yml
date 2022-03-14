@@ -7,17 +7,18 @@ resources:
 pool:
  vmImage: 'ubuntu-latest'
 
+variables:
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build and Push
   displayName: Build
   jobs:
   - job: BuildPush
+    displayName: Build and Push Images 
     steps:
     - task: Docker@2
-      name: BuildAndPush
       inputs:
         containerRegistry: 'azpipecr'
-        repository: 'azcr'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
