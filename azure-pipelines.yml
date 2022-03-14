@@ -28,7 +28,7 @@ stages:
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
-        projects: 'Tailspin.SpaceGame.Web/*'
+        projects: 'Tailspin.SpaceGame.Web/*.csproj'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'publish'
