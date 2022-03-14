@@ -32,10 +32,12 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: HelmInstaller@0
+      displayName: Install Helm
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
     - task: HelmDeploy@0
+      displayName: Intialize Helm
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
