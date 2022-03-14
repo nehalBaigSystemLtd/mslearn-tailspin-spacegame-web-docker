@@ -1,11 +1,6 @@
 trigger:
 - azpipe
 
-resources:
-- repo: self
-
-
-
 variables:
   tag: '$(Build.BuildId)'
 
