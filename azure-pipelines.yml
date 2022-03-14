@@ -27,6 +27,10 @@ stages:
         arguments: '-c Release -o /app/build'
     - task: DotNetCoreCLI@2
       inputs:
+        command: 'test'
+        projects: 'Tailspin.SpaceGame.Web/*'
+    - task: DotNetCoreCLI@2
+      inputs:
         command: 'publish'
         publishWebProjects: true
         arguments: '-c Release -o /app/publish'
