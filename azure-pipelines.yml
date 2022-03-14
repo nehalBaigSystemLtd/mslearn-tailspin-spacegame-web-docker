@@ -3,22 +3,25 @@ trigger:
 
 variables:
   tag: '$(Build.BuildId)'
+  containerRegistry: 'azpipecr'
+  repository: 'azcr'
+
 
 stages:
 - stage: Build
   displayName: Build and push stage
   
   jobs:
-  - job: Build
-    displayName: Build job 
+  - job: Docker
+    displayName: Build And Push Docker job 
     pool:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
-        containerRegistry: 'azpipecr'
-        repository: 'azcr'
+        containerRegistry: $(containerRegistry)
+        repository: $(repository)
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
