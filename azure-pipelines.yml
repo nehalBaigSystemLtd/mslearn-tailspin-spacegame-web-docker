@@ -11,16 +11,16 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: Build and Push
+  displayName: Build and Push image
   jobs:
-  - job: Build
-    displayName: Build 
+  - job: Build_Push
+    displayName: Build and Push Images 
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and Push an image
       inputs:
-        command: build
-        dockerfile: '.'
-        tags: |
-          $(tag)
+        containerRegistry: 'azpipecr'
+        repository: 'azcr'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
