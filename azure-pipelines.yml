@@ -34,7 +34,7 @@ stages:
         command: 'publish'
         publishWebProjects: true
         arguments: '-c Release -o /app/publish'
-        
+        zipAfterPublish: true
   - job: Docker
     displayName: Build And Push Docker job 
     steps:
