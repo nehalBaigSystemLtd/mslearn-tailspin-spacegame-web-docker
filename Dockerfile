@@ -2,7 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /app
-COPY  ./app/publish/Tailspin.SpaceGame.Web/* .
+COPY  . .
 EXPOSE 80
 EXPOSE 443
-ENTRYPOINT ["dotnet", "Tailspin.SpaceGame.Web.dll"]
+ENTRYPOINT ["dotnet", "/app/publish/Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.dll"]
