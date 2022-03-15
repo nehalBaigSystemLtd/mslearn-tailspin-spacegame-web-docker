@@ -73,13 +73,13 @@ stages:
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Agent.TempDirectory)/charts'
+        chartPath: '$(Build.Repository.LocalPath)/charts'
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Agent.TempDirectory)/charts/ -lat'
+        script: 'ls $(Build.Repository.LocalPath)/charts/ -lat && $(Build.SourcesDirectory)/charts/ -lat'
 
     - task: CopyFiles@2
       inputs:
