@@ -37,37 +37,11 @@ stages:
         publishWebProjects: true
         arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
         zipAfterPublish: true
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: CopyFiles@2
       inputs:
-        containerRegistry: $(containerRegistry)
-        repository: $(repository)
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.Repository.LocalPath)/Dockerfile'
-        tags: $(tag)
-    - task: HelmInstaller@0
-      inputs:
-        helmVersion: '2.14.1'
-        installKubectl: true
+        SourceFolder: $(Build.SourcesDirectory)/app/publish
+        Contents: '**'
+        TargetFolder: '$(Build.SourcesDirectory)/publish'
     - task: CmdLine@2
       inputs:
         script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/chart/ -lat'
-    - task: HelmDeploy@0
-      inputs:
-        azureContainerRegistry: $(containerRegistry)
-        azureResourceGroupForACR: $(ResourceGroup)
-        azureSubscriptionForACR: $(Subscription)
-        command: 'package'
-        chartPath: $(Build.Repository.LocalPath)/chart/dotnet/
-        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
-        arguments: '--app-version $(Build.BuildId)'
-        failOnStderr: true
-    - task: CmdLine@2
-      inputs:
-        script: 'ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
-        ArtifactName: 'helm'
-        
-  
