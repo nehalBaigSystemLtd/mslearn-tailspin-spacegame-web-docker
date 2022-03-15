@@ -6,6 +6,7 @@ variables:
   containerRegistry: 'azpipecr'
   repository: 'azcr'
   ResourceGroup: 'azpipe'
+  Subscription: 'Visual Studio Enterprise Subscription – MPN(d1b305c5-2c51-4f0a-a6b8-04e9fe0d8c17)'
 pool:
      vmImage: 'windows-latest'
 stages:
@@ -52,6 +53,13 @@ stages:
   - job: ChartArtifact
     displayName: Publish Chart Artifact
     steps:
+    - task: HelmDeploy@0
+      inputs:
+        azureContainerRegistry: $(containerRegistry)
+        azureResourceGroupForACR: $(ResourceGroup)
+        azureSubscriptionForACR: $(Subscription)
+        command: 'package'
+        chartPath: '$(Build.SourcesDirectory)/charts/'
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)/charts/'
@@ -59,7 +67,7 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
         ArtifactName: 'helm'
         
   
