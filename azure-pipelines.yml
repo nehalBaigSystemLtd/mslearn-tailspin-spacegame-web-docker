@@ -64,16 +64,16 @@ stages:
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-    - task: CmdLine@2
-      inputs:
-        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
+#    - task: CmdLine@2
+#      inputs:
+#        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Build.Repository.LocalPath)/charts/aspnet-core/'
+        chartPath: $(Build.Repository.LocalPath)/charts/aspnet-core/
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
