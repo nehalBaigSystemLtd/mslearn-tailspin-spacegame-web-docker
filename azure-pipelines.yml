@@ -10,7 +10,7 @@ variables:
 pool:
      vmImage: 'windows-latest'
 stages:
-- stage: Dotnet,Docker, Helm Package and Publish Artifact
+- stage: Dotnet Docker Helm Package and Publish Artifact
   displayName: Build and push stage
   jobs:
   - job: DotNet 
