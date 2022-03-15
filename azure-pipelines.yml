@@ -10,11 +10,11 @@ variables:
 pool:
      vmImage: 'windows-latest'
 stages:
-- stage: Build
+- stage: Dotnet_Stage
   displayName: Build and push stage
   jobs:
   - job: DotNet 
-    displayName: DotNet Build and Test   
+    displayName: Build Docker and Publish  
     steps:
     - task: DotNetCoreCLI@2
       inputs:
@@ -25,8 +25,9 @@ stages:
       inputs:
         command: 'build'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
-        arguments: '-c Release -o $(Build.SourcesDirectory)/app/build'
-        zipAfterPublish: true
+#       arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/build'
+        arguments: ''
+        zipAfterPublish: false
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
@@ -35,51 +36,41 @@ stages:
       inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
-        zipAfterPublish: true
-    
-  - job: Docker
-    displayName: Docker Build Image and Push
-    dependsOn:
-    - DotNet 
-    steps:
+        arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/publish'
+        zipAfterPublish: false
+
+#    - task: CmdLine@2
+#      inputs:
+#        script: 'DIR $(Build.SourcesDirectory) && DIR $(Build.SourcesDirectory)\Tailspin.SpaceGame.Web\After &&  DIR $(Build.SourcesDirectory)\chart\ '
+
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
         containerRegistry: $(containerRegistry)
         repository: $(repository)
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: $(tag)
-    
-  - job: ChartArtifact
-    displayName: Publish Chart Artifact
-    pool:
-     vmImage: 'ubuntu-latest'
-    dependsOn:
-    - DotNet 
-    - Docker
-    steps:
     - task: HelmInstaller@0
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-#    - task: CmdLine@2
-#      inputs:
-#        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
+    - task: CmdLine@2
+      inputs:
+        script: 'DIR $(Build.SourcesDirectory)  && DIR $(Build.SourcesDirectory)\chart\ '
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: $(Build.Repository.LocalPath)/charts/dotnet/
-        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
+        chartPath: $(Build.SourcesDirectory)/chart/dotnet
+        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
+        script: 'DIR $(Build.ArtifactStagingDirectory)\DeployCharts\gzipped\ '
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
