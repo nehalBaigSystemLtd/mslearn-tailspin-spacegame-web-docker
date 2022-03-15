@@ -79,13 +79,7 @@ stages:
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.Repository.LocalPath)/charts/ -lat && $(Build.SourcesDirectory)/charts/ -lat && ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
-
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(Build.SourcesDirectory)/charts/'
-        Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
+        script: 'ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
