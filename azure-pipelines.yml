@@ -37,12 +37,6 @@ stages:
         publishWebProjects: true
         arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
         zipAfterPublish: true
-    
-  - job: Docker
-    displayName: Docker Build Image and Push
-    dependsOn:
-    - DotNet 
-    steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -51,15 +45,6 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
-    
-  - job: ChartArtifact
-    displayName: Publish Chart Artifact
-    pool:
-     vmImage: 'ubuntu-latest'
-    dependsOn:
-    - DotNet 
-    - Docker
-    steps:
     - task: HelmInstaller@0
       inputs:
         helmVersion: '2.14.1'
