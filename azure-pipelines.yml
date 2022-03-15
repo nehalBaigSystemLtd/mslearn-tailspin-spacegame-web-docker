@@ -52,10 +52,14 @@ stages:
   - job: ChartArtifact
     displayName: Publish Chart Artifact
     steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/charts/'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)DeployCharts/'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'FilePath'
-        TargetPath: '**\charts\*'
+        ArtifactName: 'helm'
+        
   
