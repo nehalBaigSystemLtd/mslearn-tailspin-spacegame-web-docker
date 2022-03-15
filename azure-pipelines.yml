@@ -39,7 +39,8 @@ stages:
         zipAfterPublish: true
     
   - job: Docker
-    dependsOn: Build
+    dependsOn: 
+    - Build
     displayName: Build And Push Docker job 
     steps:
     - task: Docker@2
@@ -53,7 +54,9 @@ stages:
     
   - job: ChartArtifact
     displayName: Publish Chart Artifact
-    dependsOn: Docker
+    dependsOn:
+    - Build 
+    - Docker
     steps:
     - task: HelmInstaller@0
       inputs:
