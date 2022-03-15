@@ -5,8 +5,8 @@ WORKDIR /app
 COPY  . .
 RUN DIR
 RUN DIR Tailspin.SpaceGame.Web
-RUN DIR Tailspin.SpaceGame.Web/app
-RUN DIR Tailspin.SpaceGame.Web/app/publish
+RUN DIR Tailspin.SpaceGame.Web/After
+RUN DIR Tailspin.SpaceGame.Web/After/publish
 EXPOSE 80
 EXPOSE 443
 ENTRYPOINT ["dotnet", "/app/publish/Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.dll"]
