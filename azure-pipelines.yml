@@ -48,7 +48,7 @@ stages:
         containerRegistry: $(containerRegistry)
         repository: $(repository)
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)\Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: $(tag)
     - task: HelmInstaller@0
       inputs:
@@ -63,7 +63,7 @@ stages:
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/chart/dotnet/
+        chartPath: $(Build.SourcesDirectory)/chart/dotnet/
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
