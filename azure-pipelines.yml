@@ -48,7 +48,8 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
-    job: ChartArtifact
+    
+  - job: ChartArtifact
     displayName: Publish Chart Artifact
     steps:
     - task: PublishBuildArtifacts@1
