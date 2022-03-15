@@ -38,13 +38,10 @@ stages:
         arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
         zipAfterPublish: true
     
-- stage: Docker
-  displayName: Build and push stage
-  dependsOn: 
-  - Build
-  jobs:
   - job: Docker
     displayName: Docker Build Image and Push
+    dependsOn:
+    - DotNet 
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -58,22 +55,13 @@ stages:
   - job: ChartArtifact
     displayName: Publish Chart Artifact
     dependsOn:
-    - Build 
+    - DotNet 
     - Docker
     steps:
     - task: HelmInstaller@0
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-- stage: Docker
-  displayName: Build and push stage
-  dependsOn: 
-  - Build
-  - Docker
-  jobs:
-  - job: Helm
-    displayName: Helm Deploy and Publish Artifact
-    steps:
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
