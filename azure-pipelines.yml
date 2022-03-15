@@ -64,9 +64,9 @@ stages:
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-#    - task: CmdLine@2
-#      inputs:
-#        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
+    - task: CmdLine@2
+      inputs:
+        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
