@@ -58,5 +58,4 @@ stages:
         ArtifactName: 'drop'
         publishLocation: 'FilePath'
         TargetPath: '**\charts\*'
-        StoreAsTar: true
   
