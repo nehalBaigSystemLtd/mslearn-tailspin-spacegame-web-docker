@@ -43,7 +43,7 @@ stages:
         containerRegistry: $(containerRegistry)
         repository: $(repository)
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
+        Dockerfile: '$(Build.Repository.LocalPath)/Dockerfile'
         tags: $(tag)
     - task: HelmInstaller@0
       inputs:
