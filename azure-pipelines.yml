@@ -62,19 +62,17 @@ stages:
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-    - task: PowerShell@2
-      inputs:
-        targetType: 'inline'
-        script: |
-          DIR $(Build.SourcesDirectory)'
-          DIR $(Build.SourcesDirectory)/charts/'
+
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Build.SourcesDirectory)/charts'
+        chartPath: '/charts'
+        destination: $(Build.ArtifactStagingDirectory)DeployCharts/gzipped/
+        arguments: '--app-version $(Build.BuildId)'
+        failOnStderr: true
     - task: CmdLine@2
       inputs:
         script: 'DIR $(Build.SourcesDirectory)/charts/'
@@ -85,7 +83,7 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/Artifact/'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
         ArtifactName: 'helm'
         
   
