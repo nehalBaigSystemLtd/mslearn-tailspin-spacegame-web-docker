@@ -55,14 +55,14 @@ extraDeploy: []
 ## @param image.debug Enable image debug mode
 ##
 image:
-  registry: docker.io
-  repository: bitnami/aspnet-core
-  tag: 6.0.3-debian-10-r2
+  #registry: docker.io
+  repository: azpipecr.azurecr.io/azcr
+  tag: latest
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -354,7 +354,7 @@ autoscaling:
 appFromExternalRepo:
   ## @param appFromExternalRepo.enabled Enable to download/build ASP.NET Core app from external git repository
   ##
-  enabled: true
+  enabled: false
   clone:
     ## Bitnami Git image version
     ## ref: https://hub.docker.com/r/bitnami/git/tags/
@@ -364,15 +364,15 @@ appFromExternalRepo:
     ## @param appFromExternalRepo.clone.image.pullPolicy Git image pull policy
     ## @param appFromExternalRepo.clone.image.pullSecrets Git image pull secrets
     ##
-    image:
-      registry: docker.io
-      repository: bitnami/git
-      tag: 2.35.1-debian-10-r41
+    #image:
+      #registry: docker.io
+      #repository: bitnami/git
+      #tag: 2.35.1-debian-10-r41
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
       ##
-      pullPolicy: IfNotPresent
+      #pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -380,13 +380,13 @@ appFromExternalRepo:
       ## pullSecrets:
       ##   - myRegistryKeySecretName
       ##
-      pullSecrets: []
+      #pullSecrets: []
     ## @param appFromExternalRepo.clone.repository Git repository to clone
     ##
-    repository: https://github.com/dotnet/AspNetCore.Docs.git
+    #repository: https://github.com/dotnet/AspNetCore.Docs.git
     ## @param appFromExternalRepo.clone.revision Git revision to checkout
     ##
-    revision: main
+    #revision: main
     ## @param appFromExternalRepo.clone.extraVolumeMounts Add extra volume mounts for the GIT container
     ## Useful to mount keys to connect through ssh. (normally used with extraVolumes)
     ## e.g:
@@ -404,15 +404,15 @@ appFromExternalRepo:
     ## @param appFromExternalRepo.publish.image.pullPolicy .NET SDK image pull policy
     ## @param appFromExternalRepo.publish.image.pullSecrets .NET SDK image pull secrets
     ##
-    image:
-      registry: docker.io
-      repository: bitnami/dotnet-sdk
-      tag: 6.0.201-debian-10-r1
+    #image:
+      #registry: docker.io
+      #repository: bitnami/dotnet-sdk
+      #tag: 6.0.201-debian-10-r1
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
       ##
-      pullPolicy: IfNotPresent
+      #pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -420,16 +420,16 @@ appFromExternalRepo:
       ## pullSecrets:
       ##   - myRegistryKeySecretName
       ##
-      pullSecrets: []
+      #pullSecrets: []
     ## @param appFromExternalRepo.publish.subFolder Sub folder under the Git repository containing the ASP.NET Core app
     ##
-    subFolder: aspnetcore/fundamentals/servers/kestrel/samples/6.x/KestrelSample
+    #subFolder: aspnetcore/fundamentals/servers/kestrel/samples/6.x/KestrelSample
     ## @param appFromExternalRepo.publish.extraFlags Extra flags to be appended to "dotnet publish" command
     ##
-    extraFlags: []
+    #extraFlags: []
   ## @param appFromExternalRepo.startCommand Command used to start ASP.NET Core app
   ##
-  startCommand: ["dotnet", "KestrelSample.dll"]
+  #startCommand: ["dotnet", "KestrelSample.dll"]
 ## Enable mounting your ASP.NET Core app from an existing PVC
 ## Do not enable it if your docker image already includes your application
 ## @param appFromExistingPVC.enabled Enable mounting your ASP.NET Core app from an existing PVC
@@ -449,7 +449,7 @@ appFromExistingPVC:
 service:
   ## @param service.type ASP.NET Core service type
   ##
-  type: ClusterIP
+  type: LoadBalancer
   ## @param service.ports.http ASP.NET Core service HTTP port
   ##
   ports:
