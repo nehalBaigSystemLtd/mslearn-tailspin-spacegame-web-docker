@@ -73,7 +73,7 @@ stages:
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Build.Repository.LocalPath)/charts'
+        chartPath: '$(Build.Repository.LocalPath)/charts/aspnet-core/'
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
