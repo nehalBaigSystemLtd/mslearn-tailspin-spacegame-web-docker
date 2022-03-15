@@ -37,14 +37,10 @@ stages:
         publishWebProjects: true
         arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/publish'
         zipAfterPublish: false
-#    - task: CopyFiles@2
+
+#    - task: CmdLine@2
 #      inputs:
-#        SourceFolder: $(Build.SourcesDirectory)/app/publish
-#        Contents: '**'
-#        TargetFolder: '$(Build.SourcesDirectory)/publish'
-    - task: CmdLine@2
-      inputs:
-        script: 'DIR $(Build.SourcesDirectory) && DIR $(Build.SourcesDirectory)\Tailspin.SpaceGame.Web\After &&  DIR $(Build.SourcesDirectory)\chart\ '
+#        script: 'DIR $(Build.SourcesDirectory) && DIR $(Build.SourcesDirectory)\Tailspin.SpaceGame.Web\After &&  DIR $(Build.SourcesDirectory)\chart\ '
 
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -58,16 +54,16 @@ stages:
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-    - task: CmdLine@2
-      inputs:
-        script: 'DIR $(Build.SourcesDirectory)  && DIR $(Build.SourcesDirectory)\chart\ '
+#    - task: CmdLine@2
+#      inputs:
+#        script: 'DIR $(Build.SourcesDirectory)  && DIR $(Build.SourcesDirectory)\chart\ '
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: $$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/chart/dotnet/
+        chartPath: $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/chart/dotnet/
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
