@@ -25,7 +25,8 @@ stages:
       inputs:
         command: 'build'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
-        arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/build'
+#       arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/build'
+        arguments: ''
         zipAfterPublish: false
     - task: DotNetCoreCLI@2
       inputs:
