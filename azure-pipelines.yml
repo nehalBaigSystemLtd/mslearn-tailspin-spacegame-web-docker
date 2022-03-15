@@ -14,7 +14,7 @@ stages:
   displayName: Build and push stage
   jobs:
   - job: DotNet 
-    displayName: DotNet Build and Test   
+    displayName: Build Docker and Publish  
     steps:
     - task: DotNetCoreCLI@2
       inputs:
@@ -63,8 +63,8 @@ stages:
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: $(Build.SourcesDirectory)/chart/dotnet/
-        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
+        chartPath: $(Build.SourcesDirectory)/chart/dotnet
+        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
     - task: CmdLine@2
