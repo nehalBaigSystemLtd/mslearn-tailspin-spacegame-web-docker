@@ -48,4 +48,14 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(tag)
+    job: ChartArtifact
+    displayName: Publish Chart Artifact
+    steps:
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'FilePath'
+        TargetPath: '**\charts\*'
+        StoreAsTar: true
   
