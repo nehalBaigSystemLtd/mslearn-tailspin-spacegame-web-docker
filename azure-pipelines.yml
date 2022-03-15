@@ -69,7 +69,7 @@ stages:
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
+        script: 'DIR $(Build.ArtifactStagingDirectory)\DeployCharts\gzipped\ '
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
