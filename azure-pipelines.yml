@@ -44,4 +44,4 @@ stages:
 #        TargetFolder: '$(Build.SourcesDirectory)/publish'
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/chart/ -lat'
+        script: 'DIR $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/  && DIR $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/ &&  DIR $(Build.SourcesDirectory)/chart/ '
