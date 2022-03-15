@@ -64,14 +64,17 @@ stages:
         installKubectl: true
     - task: CmdLine@2
       inputs:
-        script: 'DIR $(Build.SourcesDirectory)'
+        script: 'DIR $(Build.SourcesDirectory)/charts/'
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Build.SourcesDirectory)/charts/'
+        chartPath: '$(Build.SourcesDirectory)/charts'
+    - task: CmdLine@2
+      inputs:
+        script: 'DIR $(Build.SourcesDirectory)/charts/'
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)/charts/'
