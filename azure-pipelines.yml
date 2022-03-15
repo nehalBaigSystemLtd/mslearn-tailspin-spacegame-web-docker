@@ -54,6 +54,8 @@ stages:
     
   - job: ChartArtifact
     displayName: Publish Chart Artifact
+    pool:
+     vmImage: 'ubuntu-latest'
     dependsOn:
     - DotNet 
     - Docker
@@ -62,15 +64,14 @@ stages:
       inputs:
         helmVersion: '2.14.1'
         installKubectl: true
-
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '/charts'
-        destination: $(Build.ArtifactStagingDirectory)DeployCharts/gzipped/
+        chartPath: '$(Build.SourcesDirectory)/charts'
+        destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
     - task: CmdLine@2
