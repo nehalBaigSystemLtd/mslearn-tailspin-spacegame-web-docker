@@ -56,7 +56,7 @@ stages:
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)/charts/'
         Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)DeployCharts/'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
