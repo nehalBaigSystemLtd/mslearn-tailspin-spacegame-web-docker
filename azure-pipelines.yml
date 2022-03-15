@@ -10,7 +10,7 @@ variables:
 pool:
      vmImage: 'windows-latest'
 stages:
-- stage: Dotnet-Release-Stage
+- stage: Dotnet_Stage
   displayName: Build and push stage
   jobs:
   - job: DotNet 
