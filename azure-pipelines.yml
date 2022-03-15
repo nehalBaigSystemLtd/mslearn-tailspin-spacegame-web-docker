@@ -66,20 +66,20 @@ stages:
         installKubectl: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.SourcesDirectory) -lat'
+        script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/charts/ -lat'
     - task: HelmDeploy@0
       inputs:
         azureContainerRegistry: $(containerRegistry)
         azureResourceGroupForACR: $(ResourceGroup)
         azureSubscriptionForACR: $(Subscription)
         command: 'package'
-        chartPath: '$(Build.SourcesDirectory)/charts'
+        chartPath: '$(Agent.TempDirectory)/charts'
         destination: $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/
         arguments: '--app-version $(Build.BuildId)'
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'ls $(Build.SourcesDirectory)/charts -lat'
+        script: 'ls $(Agent.TempDirectory)/charts/ -lat'
 
     - task: CopyFiles@2
       inputs:
