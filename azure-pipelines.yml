@@ -25,7 +25,7 @@ stages:
       inputs:
         command: 'build'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
-        arguments: '-c Release -o $(Build.SourcesDirectory)/app/build'
+        arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/build'
         zipAfterPublish: true
     - task: DotNetCoreCLI@2
       inputs:
@@ -35,13 +35,13 @@ stages:
       inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-c Release -o $(Build.SourcesDirectory)/app/publish'
+        arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/publish'
         zipAfterPublish: true
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: $(Build.SourcesDirectory)/app/publish
-        Contents: '**'
-        TargetFolder: '$(Build.SourcesDirectory)/publish'
+#    - task: CopyFiles@2
+#      inputs:
+#        SourceFolder: $(Build.SourcesDirectory)/app/publish
+#        Contents: '**'
+#        TargetFolder: '$(Build.SourcesDirectory)/publish'
     - task: CmdLine@2
       inputs:
         script: 'ls $(Build.SourcesDirectory) -lat && ls $(Build.SourcesDirectory)/chart/ -lat'
