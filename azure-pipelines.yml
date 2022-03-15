@@ -26,7 +26,7 @@ stages:
         command: 'build'
         projects: 'Tailspin.SpaceGame.Web/Tailspin.SpaceGame.Web.csproj'
         arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/build'
-        zipAfterPublish: true
+        zipAfterPublish: false
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
@@ -36,7 +36,7 @@ stages:
         command: 'publish'
         publishWebProjects: true
         arguments: '-c Release -o $(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/After/publish'
-        zipAfterPublish: true
+        zipAfterPublish: false
 #    - task: CopyFiles@2
 #      inputs:
 #        SourceFolder: $(Build.SourcesDirectory)/app/publish
