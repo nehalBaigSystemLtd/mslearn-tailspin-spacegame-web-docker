@@ -8,7 +8,7 @@ variables:
   ResourceGroup: 'azpipe'
   Subscription: 'Visual Studio Enterprise Subscription – MPN(d1b305c5-2c51-4f0a-a6b8-04e9fe0d8c17)'
 pool:
-     vmImage: 'windows-latest'
+     vmImage: 'ubuntu-latest'
 stages:
 - stage: Dotnet_Stage
   displayName: Build and push stage
@@ -16,6 +16,11 @@ stages:
   - job: DotNet 
     displayName: Build Docker and Publish  
     steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '5.0'
+    
     - task: DotNetCoreCLI@2
       inputs:
         command: 'restore'
