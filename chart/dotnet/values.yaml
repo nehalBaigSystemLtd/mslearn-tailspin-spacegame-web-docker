@@ -5,7 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: azpipecr.azurecr.io/azcr
+#  repository: azpipecr.azurecr.io/azcr
+  repository: mnehalb/dotnet
   tag: latest
   pullPolicy: Always
 
