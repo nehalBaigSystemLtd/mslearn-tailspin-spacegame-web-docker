@@ -74,7 +74,7 @@ stages:
         script: 'DIR $(Build.ArtifactStagingDirectory)\DeployCharts\gzipped\ '
     - task: CopyFiles@2
       inputs:
-        SourceFolder: '$(Build.SourcesDirectory)/chart/values.yaml'
+        SourceFolder: '$(Build.SourcesDirectory)/chart/dotnet/values.yaml'
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
     - task: PublishBuildArtifacts@1
