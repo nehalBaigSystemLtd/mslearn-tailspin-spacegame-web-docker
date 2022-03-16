@@ -61,7 +61,7 @@ stages:
         installKubectl: true
     - task: CmdLine@2
       inputs:
-        script: 'DIR $(Build.SourcesDirectory)  && DIR $(Build.SourcesDirectory)\chart\ '
+        script: 'ls $(Build.SourcesDirectory) -lat  && ls $(Build.SourcesDirectory)/chart/ -lat '
     
     - task: HelmDeploy@0
       inputs:
@@ -75,7 +75,7 @@ stages:
         failOnStderr: true
     - task: CmdLine@2
       inputs:
-        script: 'DIR $(Build.ArtifactStagingDirectory)\DeployCharts\gzipped\ '
+        script: 'ls $(Build.ArtifactStagingDirectory)/DeployCharts/gzipped/ -lat'
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)/chart/dotnet'
