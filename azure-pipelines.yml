@@ -4,7 +4,7 @@ trigger:
 variables:
   tag: '$(Build.BuildId)'
   ContainerServiceConnection: 'docker'
-  repository: 'dotnet'
+  repository: 'mnehalb/dotnet'
   ResourceGroup: 'azpipe'
   Subscription: 'Visual Studio Enterprise Subscription – MPN(d1b305c5-2c51-4f0a-a6b8-04e9fe0d8c17)'
 pool:
@@ -56,7 +56,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         #containerRegistry: $(ContainerServiceConnection)
-        repository: mnehalb/$(repository)
+        repository: $(repository)
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: $(tag)
