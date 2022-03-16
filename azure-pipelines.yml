@@ -79,7 +79,7 @@ stages:
         TargetFolder: '$(Build.ArtifactStagingDirectory)/DeployCharts/'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts/gzipped'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/DeployCharts'
         ArtifactName: 'helm'
         
   
