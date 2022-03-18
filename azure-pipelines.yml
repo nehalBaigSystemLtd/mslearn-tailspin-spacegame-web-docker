@@ -10,10 +10,10 @@ variables:
 pool:
      vmImage: 'ubuntu-latest'
 stages:
-- stage: OC Verfied
+- stage: oc
   displayName: OC Verfied
   jobs:
-  - job: OC 
+  - job: oc 
     displayName: OC Login  
     steps:
     - task: oc-cmd@2
