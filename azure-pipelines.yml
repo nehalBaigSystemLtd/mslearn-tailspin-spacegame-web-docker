@@ -10,11 +10,14 @@ variables:
 pool:
      vmImage: 'ubuntu-latest'
 stages:
-- stage: Dotnet_Stage
+- stage: Dotnet_Stage  
   displayName: Build and push stage
   jobs:
   - job: DotNet 
-    displayName: Build Docker and Publish  
+    displayName: Build Docker and Publish
+    environment: 
+       name: vm
+       resourceType: VirtualMachine  
     steps:
     - task: UseDotNet@2
       inputs:
