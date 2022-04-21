@@ -15,9 +15,6 @@ stages:
   jobs:
   - job: DotNet 
     displayName: Build Docker and Publish
-    environment: 
-       name: vm
-       resourceType: VirtualMachine  
     steps:
     - task: UseDotNet@2
       inputs:
